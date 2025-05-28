@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>网格交易计算器</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        body {
+            background: #f4f6fa;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            padding: 36px 40px 30px 40px;
+            margin: 40px 0;
+            min-width: 900px;
+            max-width: 98vw;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2d3a4b;
+            margin-bottom: 18px;
+        }
+
+        .input-table,
+        .result-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .input-table td,
+        .result-table td,
+        .result-table th {
+            border: 1px solid #e0e6ed;
+            padding: 10px 8px;
+            font-size: 15px;
+        }
+
+        .input-table td.label {
+            background: #f0f2f5;
+            color: #3a4a5b;
+            font-weight: 500;
+            width: 120px;
+            text-align: right;
+            border-radius: 6px 0 0 6px;
+        }
+
+        .input-table td.input {
+            background: #f8fafc;
+            border-radius: 0 6px 6px 0;
+            position: relative;
+            min-width: 160px;
+        }
+
+        .input-unit {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            font-size: 13px;
+            pointer-events: none;
+        }
+
+        .input-table input[type="number"] {
+            width: 80px;
+            padding: 6px 36px 6px 8px;
+            font-size: 15px;
+            border: 1px solid #d0d6de;
+            border-radius: 4px;
+            outline: none;
+            text-align: right;
+            background: #fff;
+            transition: border 0.2s;
+        }
+
+        .input-table input[type="number"]:focus {
+            border: 1.5px solid #4a90e2;
+        }
+
+        .tooltip {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            margin-left: 4px;
+            color: #4a90e2;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 220px;
+            background: #333;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .btn {
+            background: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 28px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(74, 144, 226, 0.08);
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #357abd;
+        }
+
+        .result-table th {
+            background: #f0f2f5;
+            color: #2d3a4b;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .result-table td {
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .red {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 1000px) {
+            .container {
+                min-width: 98vw;
+                padding: 10px;
+            }
+
+            .input-table td.label,
+            .input-table td.input {
+                font-size: 13px;
+            }
+
+            .result-table th,
+            .result-table td {
+                font-size: 13px;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .container {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                margin: 0 !important;
+                min-width: 0 !important;
+                width: 100vw !important;
+                max-width: 100vw !important;
+                padding: 0 !important;
+            }
+
+            .btn-group,
+            .tooltip {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>网格交易计算器</h2>
+        <form id="gridForm" onsubmit="event.preventDefault();calculate();">
+            <table class="input-table">
+                <tr>
+                    <td class="label">网格上限</td>
+                    <td class="input">
+                        <input type="number" id="upper" value="1.5" step="0.001">
+                        <span class="input-unit"></span>
+                    </td>
+                    <td class="label">网格步长</td>
+                    <td class="input">
+                        <input type="number" id="step" value="1.51" step="0.01">
+                        <span class="input-unit">%</span>
+                    </td>
+                    <td class="label">单笔买入
+                        <span class="tooltip">
+                            <i class="fa fa-question-circle"></i>
+                            <span class="tooltiptext">此处为买入份数，请填写100的整数倍</span>
+                        </span>
+                    </td>
+                    <td class="input">
+                        <input type="number" id="buy" value="300" step="100">
+                        <span class="input-unit">份</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">网格下限</td>
+                    <td class="input">
+                        <input type="number" id="lower" value="0.945" step="0.001">
+                        <span class="input-unit"></span>
+                    </td>
+                    <td class="label">损点幅度</td>
+                    <td class="input">
+                        <input type="number" id="loss" value="0.3" step="0.01">
+                        <span class="input-unit">%</span>
+                    </td>
+                    <td class="label">当前价</td>
+                    <td class="input">
+                        <input type="number" id="current" value="1.351" step="0.001">
+                        <span class="input-unit">元</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label" colspan="2">当前价应买入网格仓数量为</td>
+                    <td class="input" colspan="1">
+                        <input type="number" id="position_result" readonly>
+                        <span class="input-unit">份</span>
+                    </td>
+                    <td class="label" colspan="2">本网格的极限投入金额为（压力测试金额）</td>
+                    <td class="input" colspan="1">
+                        <input type="number" id="max_fund_result" readonly>
+                        <span class="input-unit">元</span>
+                    </td>
+                </tr>
+            </table>
+            <div class="btn-group">
+                <button type="button" class="btn" onclick="calculate()">计算</button>
+                <button type="button" class="btn" onclick="window.print()">打印/导出PDF</button>
+                <button type="button" class="btn" onclick="downloadScreenshot()">截图下载</button>
+            </div>
+        </form>
+        <h2>网格交易明细</h2>
+        <table class="result-table" id="resultTable">
+            <thead>
+                <tr>
+                    <th>格子数</th>
+                    <th>网格触发价</th>
+                    <th>持仓数量（份）</th>
+                    <th>所需资金（元）</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 结果将插入这里 -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function calculate() {
+            // 获取参数
+            const upper = parseFloat(document.getElementById('upper').value);
+            const lower = parseFloat(document.getElementById('lower').value);
+            const step = parseFloat(document.getElementById('step').value) / 100; // 百分比转小数
+            const buy = parseInt(document.getElementById('buy').value);
+            const current = parseFloat(document.getElementById('current').value);
+            // 计算格子数
+            let gridCount = 0;
+            let price = upper;
+            while (price > lower && gridCount < 100) {
+                price *= (1 - step);
+                gridCount++;
+            }
+            // 计算表格
+            let tbody = '';
+            price = upper;
+            let position = 0;
+            let fund = 0;
+            let positionAtCurrent = 0;
+            let foundCurrent = false;
+            for (let i = 0; i <= gridCount; i++) {
+                if (i > 0) position += buy;
+                fund = position * price;
+                // 记录当前价应买入网格仓数量
+                if (!foundCurrent && price <= current) {
+                    positionAtCurrent = position;
+                    foundCurrent = true;
+                }
+                tbody += `<tr>
+          <td>${i}</td>
+          <td class="red">${price.toFixed(3)}</td>
+          <td>${position}</td>
+          <td class="red">${fund.toFixed(2)}</td>
+        </tr>`;
+                price *= (1 - step);
+            }
+            document.querySelector('#resultTable tbody').innerHTML = tbody;
+            // 极限投入金额为最后一格的fund
+            document.getElementById('max_fund_result').value = fund.toFixed(2);
+            // 当前价应买入网格仓数量
+            document.getElementById('position_result').value = positionAtCurrent;
+        }
+        function downloadScreenshot() {
+            const container = document.querySelector('.container');
+            html2canvas(container, {
+                onclone: function (clonedDoc) {
+                    // 隐藏按钮组和所有tooltip
+                    const btnGroup = clonedDoc.querySelector('.btn-group');
+                    if (btnGroup) btnGroup.style.display = 'none';
+                    clonedDoc.querySelectorAll('.tooltip').forEach(el => el.style.display = 'none');
+                    // 替换input为span
+                    const clonedInputs = clonedDoc.querySelectorAll('.container input[type="number"]');
+                    clonedInputs.forEach(input => {
+                        const span = clonedDoc.createElement('span');
+                        span.className = 'input-value-snapshot';
+                        span.style.display = 'inline-block';
+                        span.style.minWidth = input.offsetWidth + 'px';
+                        span.style.height = input.offsetHeight + 'px';
+                        span.style.lineHeight = input.offsetHeight + 'px';
+                        span.style.fontSize = window.getComputedStyle(input).fontSize;
+                        span.style.textAlign = 'right';
+                        span.style.background = 'transparent';
+                        span.textContent = input.value;
+                        input.parentNode.insertBefore(span, input);
+                        input.parentNode.removeChild(input);
+                    });
+                }
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = '网格交易计算器截图.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+        window.onload = calculate;
+    </script>
+</body>
+
+</html>
