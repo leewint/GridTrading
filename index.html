@@ -304,27 +304,32 @@
             price = upper;
             let position = 0;
             let fund = 0;
+            let fund_acc = 0; // 新增累计资金变量
             let positionAtCurrent = 0;
             let foundCurrent = false;
             for (let i = 0; i <= gridCount; i++) {
                 if (i > 0) position += buy;
-                fund = position * price;
+                if (i === 0) {
+                    fund_acc = 0;
+                } else {
+                    fund_acc = fund_acc + buy * price;
+                }
                 // 记录当前价应买入网格仓数量
-                if (!foundCurrent && price <= current) {
-                    positionAtCurrent = position;
+                if (!foundCurrent && price < current) {
+                    positionAtCurrent = position - buy;
                     foundCurrent = true;
                 }
                 tbody += `<tr>
                 <td>${i}</td>
                 <td class="red">${price.toFixed(3)}</td>
                 <td>${position}</td>
-                <td class="red">${fund.toFixed(2)}</td>
+                <td class="red">${fund_acc.toFixed(2)}</td>
                 </tr>`;
                 price *= (1 - (step - loss));
             }
             document.querySelector('#resultTable tbody').innerHTML = tbody;
-            // 极限投入金额为最后一格的fund
-            document.getElementById('max_fund_result').value = fund.toFixed(2);
+            // 极限投入金额为最后一格的fund_acc
+            document.getElementById('max_fund_result').value = fund_acc.toFixed(2);
             // 当前价应买入网格仓数量
             document.getElementById('position_result').value = positionAtCurrent;
         }
