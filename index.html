@@ -331,6 +331,9 @@
             // 极限投入金额为最后一格的fund_acc
             document.getElementById('max_fund_result').value = fund_acc.toFixed(2);
             // 当前价应买入网格仓数量
+            if (positionAtCurrent === 0 && current <= lower) {
+                positionAtCurrent = position;
+            }
             document.getElementById('position_result').value = positionAtCurrent;
         }
         function downloadScreenshot() {
