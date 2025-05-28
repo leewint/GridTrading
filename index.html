@@ -337,12 +337,18 @@
             const container = document.querySelector('.container');
             html2canvas(container, {
                 onclone: function (clonedDoc) {
+                    const container = clonedDoc.querySelector('.container');
+                    if (container) {
+                        container.style.background = '#fff'; // 强制白底
+                        container.style.boxShadow = 'none'; // 去除阴影
+                        container.style.borderRadius = '0'; // 去除圆角
+                    }
                     // 隐藏按钮组和所有tooltip
                     const btnGroup = clonedDoc.querySelector('.btn-group');
                     if (btnGroup) btnGroup.style.display = 'none';
                     clonedDoc.querySelectorAll('.tooltip').forEach(el => el.style.display = 'none');
                     // 替换input为span
-                    const clonedInputs = clonedDoc.querySelectorAll('.container input[type="number"]');
+                    const clonedInputs = clonedDoc.querySelectorAll('.container input[type=\"number\"]');
                     clonedInputs.forEach(input => {
                         const span = clonedDoc.createElement('span');
                         span.className = 'input-value-snapshot';
