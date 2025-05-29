@@ -289,24 +289,24 @@
             const lower = parseFloat(document.getElementById('lower').value); // 网格下限
             const step = parseFloat(document.getElementById('step').value) / 100; // 网格步长，百分比转小数
             const loss = parseFloat(document.getElementById('loss').value) / 100; // 损点幅度，百分比转小数
+            const grid_step = step - loss; // 网格步长
             const buy = parseInt(document.getElementById('buy').value); // 单笔买入份数
             const current = parseFloat(document.getElementById('current').value); // 当前价
             // 计算格子数
             let gridCount = 0;
             let price = upper;
-            while (price > lower && gridCount < 100) {
-                price *= (1 - (step - loss));
+            while (price >= lower && gridCount <= 100) {
+                price *= (1 - grid_step);
                 gridCount++;
             }
             gridCount = gridCount - 1;
             // 计算表格
             let tbody = '';
-            price = upper;
-            let position = 0;
-            let fund = 0;
-            let fund_acc = 0; // 新增累计资金变量
-            let positionAtCurrent = 0;
-            let foundCurrent = false;
+            price = upper; // 网格触发价
+            let position = 0; // 持仓数量
+            let fund_acc = 0; // 所需资金
+            let positionAtCurrent = 0; // 当前价应买入网格仓数量
+            let foundCurrent = false; // 是否找到当前价
             for (let i = 0; i <= gridCount; i++) {
                 if (i > 0) position += buy;
                 if (i === 0) {
@@ -315,7 +315,7 @@
                     fund_acc = fund_acc + buy * price;
                 }
                 // 记录当前价应买入网格仓数量
-                if (!foundCurrent && price < current) {
+                if (!foundCurrent && current <= upper && price < current) {
                     positionAtCurrent = position - buy;
                     foundCurrent = true;
                 }
@@ -325,13 +325,13 @@
                 <td>${position}</td>
                 <td class="red">${fund_acc.toFixed(2)}</td>
                 </tr>`;
-                price *= (1 - (step - loss));
+                price *= (1 - grid_step);
             }
             document.querySelector('#resultTable tbody').innerHTML = tbody;
             // 极限投入金额为最后一格的fund_acc
             document.getElementById('max_fund_result').value = fund_acc.toFixed(2);
             // 当前价应买入网格仓数量
-            if (positionAtCurrent === 0 && current <= lower) {
+            if (positionAtCurrent === 0 && current <= (price / (1 - grid_step))) {
                 positionAtCurrent = position;
             }
             document.getElementById('position_result').value = positionAtCurrent;
