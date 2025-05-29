@@ -292,6 +292,13 @@
     </div>
     <script>
         function calculate() {
+            // 获取参数前，先校验所有输入不能为负数
+            ['upper', 'lower', 'step', 'loss', 'buy', 'current'].forEach(function(id) {
+                var input = document.getElementById(id);
+                if (input && parseFloat(input.value) < 0) {
+                    input.value = 0;
+                }
+            });
             // 获取参数
             const upper = parseFloat(document.getElementById('upper').value); // 网格上限
             const lower = parseFloat(document.getElementById('lower').value); // 网格下限
