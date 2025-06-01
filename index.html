@@ -261,7 +261,7 @@
         <button onclick="applyTemplate(513050)">中概互联网ETF-2</button>
         <button onclick="applyTemplate(5120001)">券商ETF-1</button>
         <button onclick="applyTemplate(5120002)">券商ETF-2</button>
-        <!-- <button onclick="applyTemplate(512980)">传媒ETF</button> -->
+        <button onclick="applyTemplate(512980)">传媒ETF</button>
         <button onclick="applyTemplate(513630)">港股红利指数ETF</button>
         <!-- 更多按钮 -->
     </div>
@@ -310,7 +310,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="label" colspan="2">当前价应买入网格仓数量为</td>
+                    <td class="label" colspan="2">当前价应买入网格数量为</td>
                     <td class="input" colspan="1">
                         <input type="number" id="position_result" readonly>
                         <span class="input-unit">份</span>
@@ -389,7 +389,7 @@
                 document.getElementById('lower').value = 1.000;
                 document.getElementById('step').value = 4.4;
                 document.getElementById('loss').value = 0.0;
-                document.getElementById('buy').value = 300;
+                document.getElementById('buy').value = 400;
                 document.getElementById('current').value = 1.354;
             } else if (templateId === 5120001) { // 券商ETF-1
                 document.getElementById('upper').value = 1.335;
@@ -407,7 +407,7 @@
                 document.getElementById('current').value = 0.997;
             } else if (templateId === 512980) { // 传媒ETF
                 document.getElementById('upper').value = 0.865;
-                document.getElementById('lower').value = 0.346;
+                document.getElementById('lower').value = 0.600;
                 document.getElementById('step').value = 2;
                 document.getElementById('loss').value = 0.5;
                 document.getElementById('buy').value = 300;
