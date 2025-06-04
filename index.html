@@ -213,14 +213,25 @@
             #template-buttons {
                 display: flex;
                 flex-direction: column;
-                gap: 14px;
                 background: #fff;
                 box-shadow: 0 4px 16px rgba(74, 144, 226, 0.10);
                 border-radius: 14px;
-                padding: 10px;
+                padding: 10px 0 10px 0;
                 align-items: center;
-                min-width: 180px;
+                min-width: 200px;
                 border: 1px solid #e0e6ed;
+                max-height: 800px;
+                overflow: hidden;
+            }
+
+            #template-buttons .template-btn-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                width: 100%;
+                overflow-y: auto;
+                max-height: 700px;
+                padding: 0 0.5em;
             }
 
             #template-buttons button {
@@ -254,23 +265,25 @@
                 }
             }
         </style>
-        <button onclick="applyTemplate(510050)">上证50ETF-2</button>
-        <button onclick="applyTemplate(510300)">沪深300ETF</button>
-        <button onclick="applyTemplate(510500)">中证500ETF-2</button>
-        <button onclick="applyTemplate(159915)">创业板ETF</button>
-        <button onclick="applyTemplate(159920)">恒生ETF-1</button>
-        <button onclick="applyTemplate(513050)">中概互联网ETF-2</button>
-        <button onclick="applyTemplate(5120001)">券商ETF-1</button>
-        <button onclick="applyTemplate(5120002)">券商ETF-2</button>
-        <button onclick="applyTemplate(159938)">医药卫生ETF</button>
-        <button onclick="applyTemplate(512980)">传媒ETF</button>
-        <button onclick="applyTemplate(513630)">港股红利指数ETF</button>
-        <button onclick="applyTemplate(518880)">黄金ETF</button>
-        <button onclick="applyTemplate(159928)">消费ETF</button>
-        <button onclick="applyTemplate(515030)">新能源ETF</button>
-        <button onclick="applyTemplate(159865)">养殖ETF</button>
-        <button onclick="applyTemplate(512660)">军工ETF</button>
-        <!-- 更多按钮 -->
+        <div class="template-btn-list">
+            <button onclick="applyTemplate(510050)">上证50ETF-2</button>
+            <button onclick="applyTemplate(510300)">沪深300ETF</button>
+            <button onclick="applyTemplate(510500)">中证500ETF-2</button>
+            <button onclick="applyTemplate(159915)">创业板ETF</button>
+            <button onclick="applyTemplate(159920)">恒生ETF-1</button>
+            <button onclick="applyTemplate(513050)">中概互联网ETF-2</button>
+            <button onclick="applyTemplate(5120001)">券商ETF-1</button>
+            <button onclick="applyTemplate(5120002)">券商ETF-2</button>
+            <button onclick="applyTemplate(159938)">医药卫生ETF</button>
+            <button onclick="applyTemplate(512980)">传媒ETF</button>
+            <button onclick="applyTemplate(513630)">港股红利指数ETF</button>
+            <button onclick="applyTemplate(518880)">黄金ETF</button>
+            <button onclick="applyTemplate(159928)">消费ETF</button>
+            <button onclick="applyTemplate(515030)">新能源ETF</button>
+            <button onclick="applyTemplate(159865)">养殖ETF</button>
+            <button onclick="applyTemplate(512660)">军工ETF</button>
+            <!-- 更多按钮 -->
+        </div>
     </div>
     <div class="container">
         <h2><span id="etf-name"></span>网格交易计算器</h2>
