@@ -256,14 +256,20 @@
         </style>
         <button onclick="applyTemplate(510050)">上证50ETF-2</button>
         <button onclick="applyTemplate(510300)">沪深300ETF</button>
-        <!-- <button onclick="applyTemplate(510500)">中证500ETF</button> -->
+        <button onclick="applyTemplate(510500)">中证500ETF-2</button>
+        <button onclick="applyTemplate(159915)">创业板ETF</button>
         <button onclick="applyTemplate(159920)">恒生ETF-1</button>
         <button onclick="applyTemplate(513050)">中概互联网ETF-2</button>
         <button onclick="applyTemplate(5120001)">券商ETF-1</button>
         <button onclick="applyTemplate(5120002)">券商ETF-2</button>
+        <button onclick="applyTemplate(159938)">医药卫生ETF</button>
         <button onclick="applyTemplate(512980)">传媒ETF</button>
         <button onclick="applyTemplate(513630)">港股红利指数ETF</button>
         <button onclick="applyTemplate(518880)">黄金ETF</button>
+        <button onclick="applyTemplate(159928)">消费ETF</button>
+        <button onclick="applyTemplate(515030)">新能源ETF</button>
+        <button onclick="applyTemplate(159865)">养殖ETF</button>
+        <button onclick="applyTemplate(512660)">军工ETF</button>
         <!-- 更多按钮 -->
     </div>
     <div class="container">
@@ -373,21 +379,29 @@
                 document.getElementById('loss').value = 0.0;
                 document.getElementById('buy').value = 100;
                 document.getElementById('current').value = 3.959;
-            } else if (templateId === 510500) { // 中证500ETF
+            } else if (templateId === 510500) { // 中证500ETF-2
                 document.getElementById('etf-name').textContent = '【中证500ETF（510500）】';
-                document.getElementById('upper').value = 7.700;
-                document.getElementById('lower').value = 6.600;
+                document.getElementById('upper').value = 6.600;
+                document.getElementById('lower').value = 4.400;
                 document.getElementById('step').value = 2.0;
                 document.getElementById('loss').value = 0.1;
                 document.getElementById('buy').value = 100;
-                document.getElementById('current').value = 5.694;
+                document.getElementById('current').value = 5.749;
+            } else if (templateId === 159915) { // 创业板ETF
+                document.getElementById('etf-name').textContent = '【创业板ETF（159915）】';
+                document.getElementById('upper').value = 2.442;
+                document.getElementById('lower').value = 1.678;
+                document.getElementById('step').value = 3.0;
+                document.getElementById('loss').value = 0.3;
+                document.getElementById('buy').value = 100;
+                document.getElementById('current').value = 2.000;
             } else if (templateId === 159920) { // 恒生ETF-1
                 document.getElementById('etf-name').textContent = '【恒生ETF-1（159920）】';
                 document.getElementById('upper').value = 1.600;
                 document.getElementById('lower').value = 1.250;
                 document.getElementById('step').value = 1.3;
                 document.getElementById('loss').value = 0.3;
-                document.getElementById('buy').value = 1000;
+                document.getElementById('buy').value = 500;
                 document.getElementById('current').value = 1.423;
             } else if (templateId === 513050) { // 中概互联网ETF-2
                 document.getElementById('etf-name').textContent = '【中概互联网ETF-2（513050）】';
@@ -413,6 +427,14 @@
                 document.getElementById('loss').value = 0.5;
                 document.getElementById('buy').value = 1000;
                 document.getElementById('current').value = 0.997;
+            } else if (templateId === 159938) { // 医药卫生ETF
+                document.getElementById('etf-name').textContent = '【医药卫生ETF（159938）】';
+                document.getElementById('upper').value = 0.693;
+                document.getElementById('lower').value = 0.518;
+                document.getElementById('step').value = 2;
+                document.getElementById('loss').value = 0.5;
+                document.getElementById('buy').value = 500;
+                document.getElementById('current').value = 0.651;
             } else if (templateId === 512980) { // 传媒ETF
                 document.getElementById('etf-name').textContent = '【传媒ETF（512980）】';
                 document.getElementById('upper').value = 0.865;
@@ -437,6 +459,38 @@
                 document.getElementById('loss').value = 0.0;
                 document.getElementById('buy').value = 100;
                 document.getElementById('current').value = 7.369;
+            } else if (templateId === 159928) { // 消费ETF
+                document.getElementById('etf-name').textContent = '【消费ETF（159928）】';
+                document.getElementById('upper').value = 0.903;
+                document.getElementById('lower').value = 0.654;
+                document.getElementById('step').value = 2.0;
+                document.getElementById('loss').value = 0.5;
+                document.getElementById('buy').value = 300;
+                document.getElementById('current').value = 0.824;
+            } else if (templateId === 515030) { // 新能源ETF
+                document.getElementById('etf-name').textContent = '【新能源ETF（515030）】';
+                document.getElementById('upper').value = 1.411;
+                document.getElementById('lower').value = 0.884;
+                document.getElementById('step').value = 3.0;
+                document.getElementById('loss').value = 0.4;
+                document.getElementById('buy').value = 300;
+                document.getElementById('current').value = 1.214;
+            } else if (templateId === 159865) { // 养殖ETF
+                document.getElementById('etf-name').textContent = '【养殖ETF（159865）】';
+                document.getElementById('upper').value = 0.697;
+                document.getElementById('lower').value = 0.473;
+                document.getElementById('step').value = 1.5;
+                document.getElementById('loss').value = 0.5;
+                document.getElementById('buy').value = 300;
+                document.getElementById('current').value = 0.609;
+            } else if (templateId === 512660) { // 军工ETF
+                document.getElementById('etf-name').textContent = '【军工ETF（512660）】';
+                document.getElementById('upper').value = 1.119;
+                document.getElementById('lower').value = 0.798;
+                document.getElementById('step').value = 3.0;
+                document.getElementById('loss').value = 0.5;
+                document.getElementById('buy').value = 300;
+                document.getElementById('current').value = 1.047;
             }
             calculate();
         }
