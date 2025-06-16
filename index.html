@@ -282,6 +282,9 @@
             <button onclick="applyTemplate(515030)">新能源ETF</button>
             <button onclick="applyTemplate(159865)">养殖ETF</button>
             <button onclick="applyTemplate(512660)">军工ETF</button>
+            <button onclick="applyTemplate(159985)">豆粕ETF</button>
+            <button onclick="applyTemplate(562570)">信创ETF</button>
+            <button onclick="applyTemplate(512690)">酒ETF</button>
             <!-- 更多按钮 -->
         </div>
     </div>
@@ -504,6 +507,30 @@
                 document.getElementById('loss').value = 0.5;
                 document.getElementById('buy').value = 300;
                 document.getElementById('current').value = 1.047;
+            } else if (templateId === 159985) { // 豆粕ETF
+                document.getElementById('etf-name').textContent = '【豆粕ETF（159985）】';
+                document.getElementById('upper').value = 2.041;
+                document.getElementById('lower').value = 1.728;
+                document.getElementById('step').value = 2.0;
+                document.getElementById('loss').value = 0.4;
+                document.getElementById('buy').value = 200;
+                document.getElementById('current').value = 1.979;
+            } else if (templateId === 562570) { // 信创ETF
+                document.getElementById('etf-name').textContent = '【信创ETF（562570）】';
+                document.getElementById('upper').value = 1.442;
+                document.getElementById('lower').value = 0.920;
+                document.getElementById('step').value = 3.0;
+                document.getElementById('loss').value = 0.5;
+                document.getElementById('buy').value = 100;
+                document.getElementById('current').value = 1.226;
+            } else if (templateId === 512690) { // 酒ETF
+                document.getElementById('etf-name').textContent = '【酒ETF（512690）】';
+                document.getElementById('upper').value = 0.723;
+                document.getElementById('lower').value = 0.480;
+                document.getElementById('step').value = 1.5;
+                document.getElementById('loss').value = 0.5;
+                document.getElementById('buy').value = 500;
+                document.getElementById('current').value = 0.547;
             }
             calculate();
         }
